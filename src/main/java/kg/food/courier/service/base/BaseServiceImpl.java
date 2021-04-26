@@ -1,6 +1,7 @@
 package kg.food.courier.service.base;
 
 import kg.food.courier.entity.BaseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -9,9 +10,10 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity,
         Repository extends JpaRepository<Entity,Long>>
         implements BaseService<Entity> {
 
+
     private final Repository userRepository;
 
-    protected BaseServiceImpl(Repository userRepository) {
+    public BaseServiceImpl(Repository userRepository) {
         this.userRepository = userRepository;
     }
 

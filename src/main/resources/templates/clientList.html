@@ -1,0 +1,76 @@
+<!doctype html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout}">
+<head>
+    <title data-th-text="#{clientList.label.header}"></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="col-xl-12 col-lg-12 col-md-6 col-sm-12 col-12">
+        <div class="card">
+            <!--  Table header and 'Create' Button  -->
+            <div class="card-header">
+
+                <form class="row" th:action="@{/client/list}" method="get">
+                    <div id="custom-search" class="top-search-bar col">
+                        <input width="125px" class="form-control" type="text" name="search" >
+                    </div>
+                    <div class="col float-right">
+                        <button type="submit" class="btn btn-info m-t-10" >Search</button>
+                    </div>
+                </form>
+
+            </div>
+
+            <div id="resultBlock" th:fragment="resultList" class="card-body p-0" th:unless="${#lists.isEmpty(clients)}">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="bg-light">
+                        <tr class="border-0">
+
+                            <th class="border-0" >Name</th>
+                            <th class="border-0" >Surname</th>
+                            <th class="border-0">Patronymic</th>
+                        </tr>
+                        </thead>
+                        <tbody id="clientTableBody">
+                        <!--looping through organizations list-->
+                        <tr th:each="client : ${clients}">
+                            <td th:text="${client.name}"></td>
+                            <td th:text="${client.surname}"></td>
+                            <td th:text="${client.patronymic}"></td>
+                            <td ><a th:href="@{'/client/' + ${client.id} }"> профиль</a></td>
+                        </tr>
+                        <!--    end of looping     -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <nav  id="pagination_nav" aria-label="Page navigation example">
+            <ul class="pagination justify-content-start">
+                <li th:if="${clients.hasPrevious()}" class="page-item" >
+                    <a class="page-link" th:href="@{/client/list(page=${clients.number-1})}" tabindex="-1" >previous</a>
+                </li>
+                <th:block th:each="i: ${#numbers.sequence(0, clients.totalPages - 1)}">
+                    <li class="page-item active" th:if="${clients.number == i}" >
+                        <span class="page-link">[[${i}+1]]</span>
+                    </li>
+                    <li th:unless="${clients.number == i}">
+                        <a class="page-link" th:href="@{/client/list(page=${i})}">[[${i}+1]]</a>
+                    </li>
+                </th:block>
+                <li class="page-item" th:if="${clients.hasNext()}">
+                    <a class="page-link" th:href="@{/client/list(page=${clients.number+1})}" >next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 package kg.food.courier.service.base;
 
 import kg.food.courier.entity.BaseEntity;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
