@@ -1,0 +1,105 @@
+<!doctype html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}" lang="en">
+<head>
+    <title th:text="${client} ? ${client.name} : #{client.label.create}"></title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="section-block" id="basicform">
+            <h2 class="section-title"
+                th:text="${add} ? #{client.label.create} : #{clientDetailPage.label.update} + ' ' + ${client.name} + ' ' + ${client.surname} + ' ' + ${client.patronymic}"></h2>
+
+            <p style="color:red;" th:text="${has_exception} ? ${exception_text} : ''"></p>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <form action="#" th:action="${add} ? @{create} : @{/client/update/{id}(id = ${client.id})}"
+                      th:object="${client}"
+                      method="POST">
+
+                    <div class="form-group">
+                        <label for="name" class="text-dark font-bold">Name</label>
+                        <input id="name" type="text" class="form-control"
+                               th:value="${client} ? ${client.name} : ' '"
+                               th:field="*{name}">
+                        <p th:if="${#fields.hasErrors('name')}" style="color:red;"
+                           th:errors="*{name}">Incorrect LP</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="surname" class="text-dark font-bold">surname</label>
+                        <input id="surname" type="text" class="form-control"
+                               th:value=" ${client} ? ${client.surname} : '' "
+                               th:field="*{surname}"/>
+                        <p th:if="${#fields.hasErrors('surname')}" style="color:red;"
+                           th:errors="*{surname}">Incorrect LP</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="patronymic" class="text-dark font-bold">patronymic</label>
+                        <input id="patronymic" type="text" class="form-control"
+                               th:value=" ${client} ? ${client.patronymic} : '' " th:field="*{patronymic}"/>
+                        <p th:if="${#fields.hasErrors('patronymic')}" style="color:red;"
+                           th:errors="*{patronymic}">Incorrect LP</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" class="text-dark font-bold">phone</label>
+                        <input id="phone" type="text" class="form-control"
+                               th:value=" ${client} ? ${client.phone} : '' " th:field="*{phone}"/>
+                        <p th:if="${#fields.hasErrors('phone')}" style="color:red;"
+                           th:errors="*{phone}">Incorrect LP</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-dark font-bold" for="status" >status</label>
+                        <select  th:field="*{status}" class="form-control" required="required" name="location" id="status">
+                            <option th:each="i : ${status}" th:value="${i}"
+                                    th:text="${i}" >
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="text-dark font-bold">email</label>
+                        <input id="email" type="text" class="form-control"
+                               th:value=" ${client} ? ${client.email} : '' " th:field="*{email}"/>
+                        <p th:if="${#fields.hasErrors('email')}" style="color:red;"
+                           th:errors="*{email}">Incorrect LP</p>
+                    </div>
+                    <button th:text="${add} ? #{button.label.create} : #{update} "
+                            th:class="${add} ? 'btn btn-success': 'btn btn-info' "
+                            type="submit" class="btn btn-success" data-toggle="tooltip"
+                            data-placement="top" title="Tooltip on top" >
+                    </button>
+                    <a type="button" th:style="${add} ? 'visibility:hidden' : ''" class="btn btn-danger"
+                       data-toggle="modal" th:attr="data-target='#recordDeleteModal'+${client.id}" >delete</a>
+                </form>
+                <!-- Modal -->
+                <div class="modal fade" th:attr="id='recordDeleteModal'+${client.id}" tabindex="-1" role="dialog"
+                     aria-labelledby="recordDeleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="recordDeleteModalLabel" >delete message</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <label>Are you sure delete?</label>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" >No</button>
+                                <form th:action="${add} ? @{/client/2} : @{/client/delete/{id}(id = ${client.id})}"
+                                      th:object="${client}" th:method="${add} ? 'GET' : 'POST'">
+                                    <button type="submit" class="btn btn-primary" >yes</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

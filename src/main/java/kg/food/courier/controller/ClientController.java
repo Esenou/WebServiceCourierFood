@@ -1,6 +1,8 @@
 package kg.food.courier.controller;
 
 import kg.food.courier.entity.User;
+import kg.food.courier.enums.StatusList;
+import kg.food.courier.model.ClientModel;
 import kg.food.courier.model.ClientShortModel;
 import kg.food.courier.service.UserService;
 
@@ -9,10 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -38,6 +39,35 @@ public class ClientController {
         return "clientList";
     }
 
+    @GetMapping("{id}")
+    public String getClientById(@PathVariable("id") Long id, Model model){
+        User clientModel = userService.findById(id);
+        model.addAttribute("add",false);
+        model.addAttribute("status", StatusList.values());
+        model.addAttribute("client",clientModel);
+        return "clientForm";
+    }
 
+    @PostMapping("delete/{id}")
+    public String deleteById(@PathVariable("id") Long id, RedirectAttributes redirectAttributes){
+        try {
+            userService.deleteById(id);
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("has_exception", true);
+            return "redirect:/client/" + id;
+        }
+        return "redirect:/client/list";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateClient(@PathVariable("id") Long id, Model model, @ModelAttribute("client") User user, BindingResult result) {
+        if(result.hasErrors()){
+            model.addAttribute("add", false);
+            model.addAttribute(user);
+        }
+        user.setId(id);
+        userService.update(user);
+        return "redirect:/client/list";
+    }
 
 }
