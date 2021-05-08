@@ -37,6 +37,10 @@ public class Organization extends BaseEntity {
     @Column(name = "status", columnDefinition = "boolean default true")
     private boolean status;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_category")
+    private Category category;
+
 
 
 }

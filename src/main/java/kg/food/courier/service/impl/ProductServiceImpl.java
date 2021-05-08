@@ -20,4 +20,13 @@ public class ProductServiceImpl extends BaseServiceImpl<Product, ProductReposito
     }
 
 
+    @Override
+    public Page<Product> findByUsernameWithSearch(Pageable pageable, String value) {
+        return productRepository.findByUsernameWithSearch(pageable,value);
+    }
+
+    @Override
+    public Page<Product> getAllByPageable(Pageable pageable) {
+        return productRepository.getAllByPageable(pageable);
+    }
 }

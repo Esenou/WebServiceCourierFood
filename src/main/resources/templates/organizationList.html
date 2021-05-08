@@ -36,9 +36,9 @@
                         <tr class="border-0">
                             <th class="border-0" >Images</th>
                             <th class="border-0" >Organization</th>
-                            <!--<th class="border-0" >Category</th>-->
+                            <th class="border-0" >Category</th>
                             <th class="border-0" >Profil</th>
-                            <!--<th class="border-0" >Rates</th>-->
+                            <th class="border-0" >Rates</th>
                             <th class="border-0" >Orders</th>
                             <th class="border-0" >Managers</th>
                         </tr>
@@ -51,8 +51,9 @@
                                 </div>
                             </td>
                             <td th:text="${org.name}"> Organization Name </td>
-                            <!--<td th:text="${org.categoryName}">Organization Category</td>-->
+                            <td th:text="${org.category.name}">Organization Category</td>
                             <td><a th:href="${org.id}"><i class="fas fa-address-book"></i></a></td>
+                            <td><a  th:href="@{'/organization/' + ${org.id} + '/rate/list'}"><i class="far fa-money-bill-alt"></i></a> </td>
                             <td><a  th:href="@{'/organization/' + ${org.id} + '/order/list'}"><i class="fab fa-first-order"></i></a></td>
                             <td><a  th:href="@{'/organization/' + ${org.id} + '/manager/list'}"><i class="far fa-user"></i></a> </td>
                         </tr>

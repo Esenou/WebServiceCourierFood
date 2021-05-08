@@ -3,9 +3,7 @@
       xmlns:sec="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layout}">
 <head>
-
     <title th:text="${organization} ? ${organization.name}"> </title>
-
 </head>
 <body>
 
@@ -56,6 +54,15 @@
                         <p th:if="${#fields.hasErrors('description')}" style="color: red;" th:errors="*{description}">Incorrect LP</p>
                     </div>
 
+                    <div  class="form-group">
+                        <label class="text-danger font-bold" for="input-select">Category</label>
+                        <select th:field="*{category}" class="form-control" id="input-select" >
+                            <!--list of organization categories-->
+                            <option th:each="orgCategory : ${orgCategories}" th:value="${orgCategory.id}"
+                                    th:text="${orgCategory.name}">
+                            </option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label class="text-dark font-bold col-form-label" for="from_time">from Time</label>
                         <input  th:value="${add} ? '' : ${organization.from_time} " th:field="*{from_time}" id="from_time"  class="form-control" type="text" required>
@@ -123,11 +130,6 @@
         </div>
 
     </div>
-
-    <!-- ============================================================== -->
-    <!-- end profile var  -->
-    <!--  -->
-    <!-- ============================================================== -->
 </div>
 </body>
 
