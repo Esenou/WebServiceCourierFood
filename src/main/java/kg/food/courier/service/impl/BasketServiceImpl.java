@@ -5,6 +5,7 @@ import kg.food.courier.repository.BasketRepository;
 import kg.food.courier.service.BasketService;
 import kg.food.courier.service.base.BaseServiceImpl;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,4 +16,6 @@ public class BasketServiceImpl extends BaseServiceImpl<Basket, BasketRepository>
         super(basketRepository);
         this.basketRepository = basketRepository;
     }
+
+
 }

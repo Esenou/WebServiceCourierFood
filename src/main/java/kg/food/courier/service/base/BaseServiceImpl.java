@@ -1,13 +1,14 @@
 package kg.food.courier.service.base;
 
 import kg.food.courier.entity.BaseEntity;
+import kg.food.courier.repository.CommonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 public abstract class BaseServiceImpl<Entity extends BaseEntity,
-        Repository extends JpaRepository<Entity,Long>>
+        Repository extends CommonRepository<Entity>>
         implements BaseService<Entity> {
 
 

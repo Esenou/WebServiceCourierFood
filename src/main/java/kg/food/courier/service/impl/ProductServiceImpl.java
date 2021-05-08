@@ -5,6 +5,8 @@ import kg.food.courier.entity.Product;
 import kg.food.courier.repository.ProductRepository;
 import kg.food.courier.service.ProductService;
 import kg.food.courier.service.base.BaseServiceImpl;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,4 +18,6 @@ public class ProductServiceImpl extends BaseServiceImpl<Product, ProductReposito
         super(productRepository);
         this.productRepository = productRepository;
     }
+
+
 }

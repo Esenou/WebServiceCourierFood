@@ -20,11 +20,8 @@ public class Product extends BaseEntity{
     @Column(name = "image")
     private String image;
 
-    @Column(name = "price",nullable = false)
-    private int price;
-
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_organization")
-    private Organization organization;
+    @JoinColumn(name = "id_category")
+    private Category category;
 
 }

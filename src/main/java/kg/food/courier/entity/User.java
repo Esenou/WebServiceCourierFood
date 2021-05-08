@@ -33,6 +33,10 @@ public class User extends BaseEntity {
     @JoinColumn(name = "status")
     private StatusList status = StatusList.ACTIVE;
 
+    @ManyToOne (fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_organization")
+    private Organization organization;
+
     @Enumerated(EnumType.STRING)
     @JoinColumn(name = "role")
     private Role role;

@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserRepository extends CommonRepository<User> {
 
     @Query(value = "select user from User user where user.name like %?1% ")
     Page<User> findByUsernameWithSearch(Pageable pageable, String value);

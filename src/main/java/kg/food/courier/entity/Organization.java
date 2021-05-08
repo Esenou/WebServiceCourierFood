@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Getter
@@ -26,15 +28,15 @@ public class Organization extends BaseEntity {
     @Column(name = "average_check")
     private int average_check;
 
-    @Column(name = "working_hours", nullable = false)
-    private Date working_hours;
+    @Column(name = "from_time")
+    private Time from_time;
 
-    @Enumerated(EnumType.STRING)
-    @JoinColumn(name = "status")
-    private StatusList status = StatusList.ACTIVE;
+    @Column(name = "before_time")
+    private Time before_time;
+
+    @Column(name = "status", columnDefinition = "boolean default true")
+    private boolean status;
 
 
-    @ManyToOne (fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_user_admin")
-    private User user;
+
 }

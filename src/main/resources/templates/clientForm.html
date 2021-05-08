@@ -53,7 +53,7 @@
                     <div class="form-group">
                         <label class="text-dark font-bold" for="status" >status</label>
                         <select  th:field="*{status}" class="form-control" required="required" name="location" id="status">
-                            <option th:each="i : ${status}" th:value="${i}"
+                            <option th:each="i : ${status}" th:value="${client.status}"
                                     th:text="${i}" >
                             </option>
                         </select>
