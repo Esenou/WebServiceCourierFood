@@ -72,8 +72,9 @@ public class OrgController {
     @GetMapping("/form")
     public String organizationForm(Model model){
         Organization organization = new Organization();
+        List<Category> orgCategories = categoryService.findByAll();
         model.addAttribute("organization", organization);
-      // model.addAttribute("orgCategories", orgCategories);
+        model.addAttribute("orgCategories", orgCategories);
         model.addAttribute("add", true);
         return "organizationForm";
 

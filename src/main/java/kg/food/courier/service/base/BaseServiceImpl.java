@@ -26,6 +26,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity,
     @Override
     public Entity create(Entity dto) {
         return userRepository.save(dto);
+
     }
 
     @Override

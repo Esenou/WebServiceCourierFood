@@ -8,6 +8,7 @@
 <!-- ============================================================== -->
 <div class="nav-left-sidebar sidebar-dark navbar-dark bg-dark" th:fragment="leftMenu">
     <div class="menu-list">
+        <meta charset="UTF-8">
         <nav class="navbar navbar-expand-lg navbar-light">
             <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,7 +23,7 @@
                         <div  >
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link" th:href="@{/client/list}">Клиенты</a>
+                                    <a class="nav-link" data-th-text="#{leftMenu.label.clients}" th:href="@{/client/list}"></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" th:href="@{/organization/list}" >Организации</a>

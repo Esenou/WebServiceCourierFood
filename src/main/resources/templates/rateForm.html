@@ -1,0 +1,88 @@
+<!doctype html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="#{rate.label.create}"> </title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="section-block" id="basicform" >
+            <h3 class="section-title" th:text="${add} ? #{New create rate} : #{rate.label.update}"></h3>
+            <p th:text="${add} ? #{rate.label.create_desc} : #{rate.label.update_desc}"></p>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <form action="#" th:action="${add} ? @{create} : '/organization/' + ${orgId} + '/rate/update/' + ${rate.id}"  th:object="${rate}" method="POST">
+                    <div class="form-group">
+                        <div th:if="${!add}" class="form-group" >
+                            <label class="text-dark font-bold col-form-label col-form-label" for="input-select_org" >Name</label>
+                            <select th:field="*{organization}" class="form-control" id="input-select_org" >
+                                <option th:value="${rate.organization.id}" th:text="${rate.organization.name}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-bold col-form-label col-form-label" for="input-select" >Product</label>
+                            <select th:field="*{product}" class="form-control" id="input-select" >
+                                <option th:each="material : ${materials}" th:value="${material.id}" th:text="${material.name}"></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="text-dark font-bold col-form-label col-form-label" for="input-select-unit">Unit</label>
+                            <select th:field="*{unit}" class="form-control" id="input-select-unit" >
+                                <option th:each="unit : ${unitList}" th:value="${unit.id}" th:text="${unit.name}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-bold col-form-label" for="Price_input" >Price</label>
+                            <input th:value="${rate} ? ${rate.price} : '' " th:field="*{price}" id="Price_input" type="number"  class="form-control">
+                            <p th:if="${#fields.hasErrors('price')}" style="color: red;" th:errors="*{price}">Incorrect LP</p>
+                        </div>
+
+                        <div>
+                            <button th:text=" ${add} ? #{create} : #{update}"
+                                    th:class="${'Create'} ? 'btn btn-info' : 'btn btn-success' "
+                                    type="submit" class="btn btn-success" data-toggle="tooltip"
+                                    data-placement="top" title="Tooltip on top">Create
+                            </button>
+
+                            <a th:if="${!add}" type="button" style="color: white;" class="btn btn-danger" data-toggle="modal" data-target="#delete_modal " data-th-text="#{button.label.delete}"></a>
+
+                            <!-- Modal -->
+                            <div th:if="${!add}" class="modal fade" tabindex="-1" id="delete_modal" role="dialog" aria-labelledby="recordDeleteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="recordDeleteModalLabel" data-th-text="#{button.label.delete_message}"></h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <label data-th-text="#{label.confirm_to_delete}"></label>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal" data-th-text="#{label.no}"></button>
+                                            <a class="btn btn-danger" th:href="@{'/organization/' + ${orgId}  + '/rate/delete/' + ${rate.id}}" data-th-text="#{label.yes}"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+
+    </div>
+    <!-- ============================================================== -->
+    <!-- end profile -->
+    <!-- ============================================================== -->
+</div>
+</body>
+</html>
