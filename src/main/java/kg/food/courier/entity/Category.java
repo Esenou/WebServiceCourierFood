@@ -15,4 +15,10 @@ import javax.persistence.Table;
 public class Category extends BaseEntity {
     @Column(name = "name",nullable = false)
     private String name;
+
+    @Column(name = "description", nullable = false)
+    private String description;
+
+    @Column(name = "image")
+    private String image;
 }

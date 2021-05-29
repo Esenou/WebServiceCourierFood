@@ -59,7 +59,7 @@ public class ProdController {
         }*/
         productService.create(product);
 
-        return "redirect:product/list";
+        return "redirect:/product/list";
     }
 
     private List<Category> loadCategories() {
