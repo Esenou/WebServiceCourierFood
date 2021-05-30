@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -65,5 +66,42 @@ public class ProdController {
     private List<Category> loadCategories() {
          return categories == null ? categoryService.findByAll() : categories;
     }
+
+    @GetMapping("/{id}")
+    public String getProductById(@PathVariable(required = false) Long id, Model model){
+        Product product = productService.findById(id);
+        model.addAttribute("material", product);
+        model.addAttribute("categories", loadCategories());
+        model.addAttribute("add", false);
+        return "productForm";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateProduct(@PathVariable(required = false) Long id, Model model,
+                                @ModelAttribute("materials") Product product,
+                                BindingResult result){
+        /*if (result.hasErrors()) {
+            model.addAttribute(product);
+            model.addAttribute("categories", loadCategories());
+            model.addAttribute("add", false);
+            return "productForm";
+        }*/
+        product.setId(id);
+        productService.create(product);
+        return "redirect:/product/list";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id, RedirectAttributes redirectAttributes){
+        try{
+            productService.deleteById(id);
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("has_exception", true);
+            redirectAttributes.addFlashAttribute("exception_text", "Couldn't delete on table material violates foreign key constraint ");
+            return "redirect:/product/"+id;
+        }
+        return "redirect:/product/list";
+    }
+
 
 }

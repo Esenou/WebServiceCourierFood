@@ -72,7 +72,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal" data-th-text="#{label.no}"></button>
-                                <form th:action="${add} ? @{/org_category/list} : @{/org_category/delete/{id}(id = ${category.id})}" th:object="${category}" th:method="${add} ? 'GET' : 'POST'">
+                                <form th:action="${add} ? @{/category/list} : @{/category/delete/{id}(id = ${category.id})}" th:object="${category}" th:method="${add} ? 'GET' : 'POST'">
                                     <button type="submit" class="btn btn-primary" data-th-text="#{label.yes}"></button>
                                 </form>
                             </div>
