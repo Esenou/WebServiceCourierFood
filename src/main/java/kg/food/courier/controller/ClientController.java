@@ -1,5 +1,6 @@
 package kg.food.courier.controller;
 
+import kg.food.courier.entity.Organization;
 import kg.food.courier.entity.User;
 import kg.food.courier.enums.StatusList;
 import kg.food.courier.model.ClientModel;
@@ -67,6 +68,27 @@ public class ClientController {
         }
         user.setId(id);
         userService.update(user);
+        return "redirect:/client/list";
+    }
+
+    @GetMapping("/form")
+    public String getClientForm(Model model) {
+        User user = new User();
+        model.addAttribute("client",user);
+        model.addAttribute("status", StatusList.values());
+        model.addAttribute("add",true);
+        return "clientForm";
+    }
+
+    @PostMapping(value = "/create")
+    public String createClient(@ModelAttribute("client") User user,
+                               BindingResult result, Model model) {
+        /*if (result.hasErrors()) {
+            model.addAttribute(organizationModelImage);
+            model.addAttribute("add", true);
+            return "organizationForm";
+        }*/
+        userService.create(user);
         return "redirect:/client/list";
     }
 
