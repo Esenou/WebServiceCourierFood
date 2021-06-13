@@ -1,10 +1,8 @@
 package kg.food.courier.controller;
 
-import kg.food.courier.entity.User;
+import kg.food.courier.entity.Client;
 import kg.food.courier.enums.StatusList;
-import kg.food.courier.model.ClientModel;
-import kg.food.courier.model.ClientShortModel;
-import kg.food.courier.service.UserService;
+import kg.food.courier.service.ClientService;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,20 +18,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("client")
 public class ClientController {
 
-    private final UserService userService;
+    private final ClientService clientService;
 
-    public ClientController(UserService userService) {
-        this.userService = userService;
+    public ClientController(ClientService clientService) {
+        this.clientService = clientService;
     }
 
     @GetMapping("/list")
     public String getClientList(@PageableDefault Pageable pageable,
                                 @RequestParam(value = "search", required = false) String value, Model model){
-        Page<User> clients;
+        Page<Client> clients;
         if(value != null){
-            clients = userService.findByUsernameWithSearch(pageable,value);
+            clients = clientService.findByUsernameWithSearch(pageable,value);
         } else {
-            clients = userService.getAllByPageable(pageable);
+            clients = clientService.getAllByPageable(pageable);
         }
         model.addAttribute("clients",clients);
         return "clientList";
@@ -41,7 +39,7 @@ public class ClientController {
 
     @GetMapping("{id}")
     public String getClientById(@PathVariable("id") Long id, Model model){
-        User clientModel = userService.findById(id);
+        Client clientModel = clientService.findById(id);
         model.addAttribute("add",false);
         model.addAttribute("status", StatusList.values());
         model.addAttribute("client",clientModel);
@@ -51,7 +49,7 @@ public class ClientController {
     @PostMapping("delete/{id}")
     public String deleteById(@PathVariable("id") Long id, RedirectAttributes redirectAttributes){
         try {
-            userService.deleteById(id);
+            clientService.deleteById(id);
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("has_exception", true);
             return "redirect:/client/" + id;
@@ -60,13 +58,13 @@ public class ClientController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateClient(@PathVariable("id") Long id, Model model, @ModelAttribute("client") User user, BindingResult result) {
+    public String updateClient(@PathVariable("id") Long id, Model model, @ModelAttribute("client") Client user, BindingResult result) {
         if(result.hasErrors()){
             model.addAttribute("add", false);
             model.addAttribute(user);
         }
         user.setId(id);
-        userService.update(user);
+        clientService.update(user);
         return "redirect:/client/list";
     }
 

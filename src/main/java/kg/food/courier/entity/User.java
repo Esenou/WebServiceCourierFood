@@ -1,41 +1,34 @@
 package kg.food.courier.entity;
 
-
 import kg.food.courier.enums.Role;
+import kg.food.courier.enums.StatusList;
+import lombok.*;
+
 import kg.food.courier.enums.StatusList;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "users")
 public class User extends BaseEntity {
 
-    @Column(name = "surname", nullable = false)
-    private String surname;
+    @ManyToOne
+    @JoinColumn(name = "organization_id")
+    private Organization organization;
 
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @Column(name = "patronymic", nullable = true)
-    private String patronymic;
-
-    @Column(name = "phone", nullable = false)
-    private String phone;
-
-    @Column(name = "email", nullable = false)
-    private String email;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_identification")
+    private  Identification identification;
 
     @Enumerated(EnumType.STRING)
     @JoinColumn(name = "status")
     private StatusList status = StatusList.ACTIVE;
-
-    @ManyToOne (fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_organization")
-    private Organization organization;
 
     @Enumerated(EnumType.STRING)
     @JoinColumn(name = "role")

@@ -21,6 +21,6 @@ public class Order extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_client")
-    private User client;
+    private Client client;
 
 }

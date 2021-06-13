@@ -2,9 +2,7 @@ package kg.food.courier.controller;
 
 import kg.food.courier.entity.Category;
 import kg.food.courier.entity.Organization;
-import kg.food.courier.entity.User;
 import kg.food.courier.enums.StatusList;
-import kg.food.courier.model.OrganizationModel;
 import kg.food.courier.service.CategoryService;
 import kg.food.courier.service.OrganizationService;
 import org.springframework.data.domain.Page;

@@ -1,7 +1,6 @@
 package kg.food.courier.service.impl;
 
 import kg.food.courier.entity.Organization;
-import kg.food.courier.model.OrganizationModel;
 import kg.food.courier.repository.OrganizationRepository;
 import kg.food.courier.service.OrganizationService;
 import kg.food.courier.service.base.BaseServiceImpl;
